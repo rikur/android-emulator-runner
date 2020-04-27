@@ -13,17 +13,17 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
   const isOnMac = process.platform === 'darwin';
   console.log('Installing new cmdline-tools.');
   const sdkUrl = isOnMac ? CMDLINE_TOOLS_URL_MAC : CMDLINE_TOOLS_URL_LINUX;
-  await exec.exec(`sudo mkdir ${process.env.ANDROID_HOME}/cmdline-tools`);
+  await exec.exec(`mkdir ${process.env.ANDROID_HOME}/cmdline-tools`);
   await exec.exec(`curl -fo commandlinetools.zip ${sdkUrl}`);
-  await exec.exec(`sudo unzip -q commandlinetools.zip -d ${process.env.ANDROID_HOME}/cmdline-tools`);
-  await exec.exec(`sudo rm -f commandlinetools.zip`);
+  await exec.exec(`unzip -q commandlinetools.zip -d ${process.env.ANDROID_HOME}/cmdline-tools`);
+  await exec.exec(`rm -f commandlinetools.zip`);
 
   // add paths for commandline-tools and platform-tools
   core.addPath(`${process.env.ANDROID_HOME}/cmdline-tools/tools:${process.env.ANDROID_HOME}/cmdline-tools/tools/bin:${process.env.ANDROID_HOME}/platform-tools`);
 
   // additional permission and license requirements for Linux
   if (!isOnMac) {
-    await exec.exec(`sh -c \\"sudo chmod -R 777 ${process.env.ANDROID_HOME}"`);
+    await exec.exec(`sh -c \\"chmod -R 777 ${process.env.ANDROID_HOME}"`);
     await exec.exec(`sh -c \\"echo -e '\n84831b9409646a918e30573bab4c9c91346d8abd' > ${process.env.ANDROID_HOME}/licenses/android-sdk-preview-license"`);
   }
 
@@ -33,9 +33,9 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
   if (emulatorBuild) {
     console.log(`Installing emulator build ${emulatorBuild}.`);
     await exec.exec(`curl -fo emulator.zip https://dl.google.com/android/repository/emulator-${isOnMac ? 'darwin' : 'linux'}-${emulatorBuild}.zip`);
-    await exec.exec(`sudo rm -rf ${process.env.ANDROID_HOME}/emulator`);
-    await exec.exec(`sudo unzip -q emulator.zip -d ${process.env.ANDROID_HOME}`);
-    await exec.exec(`sudo rm -f emulator.zip`);
+    await exec.exec(`rm -rf ${process.env.ANDROID_HOME}/emulator`);
+    await exec.exec(`unzip -q emulator.zip -d ${process.env.ANDROID_HOME}`);
+    await exec.exec(`rm -f emulator.zip`);
   } else {
     console.log('Installing latest emulator.');
     await exec.exec(`sh -c \\"sdkmanager --install emulator > /dev/null"`);
