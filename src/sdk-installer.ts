@@ -29,7 +29,7 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
 
   console.log('Installing latest build tools, platform tools, and platform.');
 
-  await exec.exec(`sh -c \\"sdkmanager --install 'build-tools;${BUILD_TOOLS_VERSION}' platform-tools 'platforms;android-${apiLevel}' > /dev/null"`);
+  await exec.exec(`sdkmanager --install 'build-tools;${BUILD_TOOLS_VERSION}' platform-tools 'platforms;android-${apiLevel}' > /dev/null`);
   if (emulatorBuild) {
     console.log(`Installing emulator build ${emulatorBuild}.`);
     await exec.exec(`curl -fo emulator.zip https://dl.google.com/android/repository/emulator-${isOnMac ? 'darwin' : 'linux'}-${emulatorBuild}.zip`);
@@ -38,17 +38,17 @@ export async function installAndroidSdk(apiLevel: number, target: string, arch: 
     await exec.exec(`rm -f emulator.zip`);
   } else {
     console.log('Installing latest emulator.');
-    await exec.exec(`sh -c \\"sdkmanager --install emulator > /dev/null"`);
+    await exec.exec(`sdkmanager --install emulator > /dev/null`);
   }
   console.log('Installing system images.');
-  await exec.exec(`sh -c \\"sdkmanager --install 'system-images;android-${apiLevel};${target};${arch}' > /dev/null"`);
+  await exec.exec(`sdkmanager --install 'system-images;android-${apiLevel};${target};${arch}' > /dev/null`);
 
   if (ndkVersion) {
     console.log(`Installing NDK ${ndkVersion}.`);
-    await exec.exec(`sh -c \\"sdkmanager --install 'ndk;${ndkVersion}' > /dev/null"`);
+    await exec.exec(`sdkmanager --install 'ndk;${ndkVersion}' > /dev/null`);
   }
   if (cmakeVersion) {
     console.log(`Installing CMake ${cmakeVersion}.`);
-    await exec.exec(`sh -c \\"sdkmanager --install 'cmake;${cmakeVersion}' > /dev/null"`);
+    await exec.exec(`sdkmanager --install 'cmake;${cmakeVersion}' > /dev/null`);
   }
 }
