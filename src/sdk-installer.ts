@@ -11,12 +11,12 @@ const CMDLINE_TOOLS_URL_LINUX = 'https://dl.google.com/android/repository/comman
  */
 export async function installAndroidSdk(apiLevel: number, target: string, arch: string, emulatorBuild?: string, ndkVersion?: string, cmakeVersion?: string): Promise<void> {
   const isOnMac = process.platform === 'darwin';
-  console.log('Installing new cmdline-tools.');
-  const sdkUrl = isOnMac ? CMDLINE_TOOLS_URL_MAC : CMDLINE_TOOLS_URL_LINUX;
-  await exec.exec(`mkdir ${process.env.ANDROID_HOME}/cmdline-tools`);
-  await exec.exec(`curl -fo commandlinetools.zip ${sdkUrl}`);
-  await exec.exec(`unzip -q commandlinetools.zip -d ${process.env.ANDROID_HOME}/cmdline-tools`);
-  await exec.exec(`rm -f commandlinetools.zip`);
+  // console.log('Installing new cmdline-tools.');
+  // const sdkUrl = isOnMac ? CMDLINE_TOOLS_URL_MAC : CMDLINE_TOOLS_URL_LINUX;
+  // await exec.exec(`mkdir ${process.env.ANDROID_HOME}/cmdline-tools`);
+  // await exec.exec(`curl -fo commandlinetools.zip ${sdkUrl}`);
+  // await exec.exec(`unzip -q commandlinetools.zip -d ${process.env.ANDROID_HOME}/cmdline-tools`);
+  // await exec.exec(`rm -f commandlinetools.zip`);
 
   // add paths for commandline-tools and platform-tools
   core.addPath(`${process.env.ANDROID_HOME}/cmdline-tools/tools:${process.env.ANDROID_HOME}/cmdline-tools/tools/bin:${process.env.ANDROID_HOME}/platform-tools`);
