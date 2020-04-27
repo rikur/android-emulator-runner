@@ -86,7 +86,7 @@ async function run() {
     });
 
     // install SDK
-    await installAndroidSdk(apiLevel, target, arch, emulatorBuild, ndkVersion, cmakeVersion);
+    // await installAndroidSdk(apiLevel, target, arch, emulatorBuild, ndkVersion, cmakeVersion);
 
     // launch an emulator
     await launchEmulator(apiLevel, target, arch, profile, emulatorOptions, disableAnimations);
