@@ -12,7 +12,7 @@ export async function launchEmulator(apiLevel: number, target: string, arch: str
     await exec.exec(`avdmanager create avd --force -n test --abi "${target}/${arch}" --package "system-images;android-${apiLevel};${target};${arch}" --device "${profile}"`);
   } else {
     console.log(`Creating AVD without custom profile.`);
-    await exec.exec(`sh -c \\"echo no | avdmanager create avd --force -n test --abi '${target}/${arch}' --package 'system-images;android-${apiLevel};${target};${arch}'"`);
+    await exec.exec(`echo no | avdmanager create avd --force -n test --abi '${target}/${arch}' --package 'system-images;android-${apiLevel};${target};${arch}'`);
   }
 
   // start emulator
@@ -23,7 +23,7 @@ export async function launchEmulator(apiLevel: number, target: string, arch: str
     emulatorOptions += ' -accel off';
   }
 
-  await exec.exec(`sh -c \\"${process.env.ANDROID_HOME}/emulator/emulator -avd test ${emulatorOptions} &"`, [], {
+  await exec.exec(`${process.env.ANDROID_HOME}/emulator/emulator -avd test ${emulatorOptions} &`, [], {
     listeners: {
       stderr: (data: Buffer) => {
         if (data.toString().includes('invalid command-line parameter')) {
